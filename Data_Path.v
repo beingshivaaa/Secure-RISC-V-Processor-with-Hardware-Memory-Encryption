@@ -86,7 +86,6 @@ module Data_Path(
     wire [4:0] RdW;
     
 wire [31:0]  WriteDataE;
-wire [31:0]  WriteDataM;
     
 //Forwarding select signals
 wire [1:0] ForwardAE;
@@ -254,7 +253,7 @@ decrypt_unit dec(.secret_key(SecretKey),.plaintext(DecryptedReadData),.ciphertex
 wire ReadKeyAddress;
 assign ReadKeyAddress= (ALUResultM == 32'h00000020);
 
-assign ReadDataM= ReadKeyAddress? 32'h00000000 : DecryptedReadData;
+assign ReadDataM= ReadKeyAddress? 32'h00000000 : DecryptedReadData;//inorder to prevent the secret key to be read from the KEY REGISTER ADDRESS
 
 //---------------------------------//
 
